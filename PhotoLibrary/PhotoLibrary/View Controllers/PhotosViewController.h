@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PhotosWebServices.h"
+#import "PhotosData.h"
 
-@interface PhotosViewController : UIViewController
+@interface PhotosViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource, PhotosDataDelegate>
 
 @end

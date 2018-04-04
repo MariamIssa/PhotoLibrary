@@ -13,6 +13,8 @@
 		54B500C220751A6800483680 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54B500C020751A6800483680 /* LaunchScreen.storyboard */; };
 		54B500C520751A6800483680 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B500C420751A6800483680 /* main.m */; };
 		54B500CD20751AEC00483680 /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B500CC20751AEC00483680 /* PhotosViewController.m */; };
+		54B500D02075208700483680 /* PhotosWebServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B500CF2075208700483680 /* PhotosWebServices.m */; };
+		54B500D32075341100483680 /* PhotosData.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B500D22075341100483680 /* PhotosData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,10 @@
 		54B500C420751A6800483680 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		54B500CB20751AEC00483680 /* PhotosViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotosViewController.h; sourceTree = "<group>"; };
 		54B500CC20751AEC00483680 /* PhotosViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotosViewController.m; sourceTree = "<group>"; };
+		54B500CE2075208700483680 /* PhotosWebServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotosWebServices.h; sourceTree = "<group>"; };
+		54B500CF2075208700483680 /* PhotosWebServices.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotosWebServices.m; sourceTree = "<group>"; };
+		54B500D12075341100483680 /* PhotosData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotosData.h; sourceTree = "<group>"; };
+		54B500D22075341100483680 /* PhotosData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotosData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +66,9 @@
 			children = (
 				54B500B520751A6700483680 /* AppDelegate.h */,
 				54B500B620751A6700483680 /* AppDelegate.m */,
-				54B500CB20751AEC00483680 /* PhotosViewController.h */,
-				54B500CC20751AEC00483680 /* PhotosViewController.m */,
+				54B500D420753A5300483680 /* View Controllers */,
+				54B500D520753A7000483680 /* View Services */,
+				54B500D620753A9D00483680 /* Web Services */,
 				54B500BB20751A6700483680 /* Main.storyboard */,
 				54B500BE20751A6800483680 /* Assets.xcassets */,
 				54B500C020751A6800483680 /* LaunchScreen.storyboard */,
@@ -69,6 +76,33 @@
 				54B500C420751A6800483680 /* main.m */,
 			);
 			path = PhotoLibrary;
+			sourceTree = "<group>";
+		};
+		54B500D420753A5300483680 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				54B500CB20751AEC00483680 /* PhotosViewController.h */,
+				54B500CC20751AEC00483680 /* PhotosViewController.m */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		54B500D520753A7000483680 /* View Services */ = {
+			isa = PBXGroup;
+			children = (
+				54B500D12075341100483680 /* PhotosData.h */,
+				54B500D22075341100483680 /* PhotosData.m */,
+			);
+			path = "View Services";
+			sourceTree = "<group>";
+		};
+		54B500D620753A9D00483680 /* Web Services */ = {
+			isa = PBXGroup;
+			children = (
+				54B500CE2075208700483680 /* PhotosWebServices.h */,
+				54B500CF2075208700483680 /* PhotosWebServices.m */,
+			);
+			path = "Web Services";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,7 +176,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				54B500C520751A6800483680 /* main.m in Sources */,
+				54B500D02075208700483680 /* PhotosWebServices.m in Sources */,
 				54B500CD20751AEC00483680 /* PhotosViewController.m in Sources */,
+				54B500D32075341100483680 /* PhotosData.m in Sources */,
 				54B500B720751A6700483680 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
