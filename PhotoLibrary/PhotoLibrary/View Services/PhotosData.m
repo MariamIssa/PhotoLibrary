@@ -10,10 +10,10 @@
 
 @interface PhotosData()
 @property(nonatomic, weak) id <PhotosDataDelegate> delegate;
-@property(nonatomic, strong) NSArray *photosData;
+@property(nonatomic, strong) NSArray *contentsData;
 @property(nonatomic, strong) PhotosWebServices *photosServices;
-@property(nonatomic, strong) NSMutableDictionary *photos;
-
+@property(nonatomic, strong) NSMutableDictionary *thumbnails;
+@property(nonatomic, strong) NSMutableDictionary *downloadedPhotos;
 @end
 
 
@@ -24,22 +24,22 @@
     self = [super init];
     
     self.delegate = delegatge;
-    self.photosData = [[NSArray alloc] init];
+    self.contentsData = [[NSArray alloc] init];
     self.photosServices = [[PhotosWebServices alloc] initWithDelegate:self];
-    self.photos = [[NSMutableDictionary alloc] init];
+    self.thumbnails = [[NSMutableDictionary alloc] init];
     [self getPhotosData];
     
     return self;
 }
 
 -(void)getPhotosData {
-    [self.photosServices getContentsFromUrl:@"https://jsonplaceholder.typicode.com/photos" forIndex:-1];
+    [self.photosServices getContentsFromUrl:@"https://jsonplaceholder.typicode.com/photos" for:InitialDownload withIndex:-1];
 }
 
--(void)downloadCompletedWithData:(NSData *)responseData forIndex:(NSInteger)index{
+-(void)downloadCompletedWithData:(NSData *)responseData for:(DownloadType)type withIndex:(NSInteger)index {
     
-    if (index < 0) {
-        self.photosData = [NSJSONSerialization
+    if (type == InitialDownload) {
+        self.contentsData = [NSJSONSerialization
                            JSONObjectWithData:responseData
                            options:NSJSONReadingMutableLeaves
                            error:nil];
@@ -47,29 +47,57 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.delegate dataLayerInitialSetupCompletedSuccessfully];
         });
-    } else {
-        [self.photos setObject:responseData forKey:[NSString stringWithFormat:@"%ld",(long)index]];
+    } else if(type == ThumbnailDownload) {
+        [self.thumbnails setObject:responseData forKey:[NSString stringWithFormat:@"%ld",(long)index]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate thumbnailDownloadedSuccessfully:responseData forIndex:index];
+        });
+        
+    } else if(type == FullImageDownload){
+         [self.downloadedPhotos setObject:responseData forKey:[NSString stringWithFormat:@"%ld",(long)index]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate imageDownloadedSuccessfully:responseData forIndex:index];
+        });
     }
 }
 
--(NSInteger) numberOfRows
-{
-    return self.photosData.count;
+- (void)downloadCompletedWithError:(NSError *)error {
+    [self.delegate downloadCompletedWithError:error];
 }
 
--(NSData *) imageForIndexPath:(NSUInteger)index
+-(NSInteger)numberOfRows
 {
-    NSData *photo = self.photos[[NSString stringWithFormat:@"%lu",(unsigned long)index]];
+    return (NSInteger)self.contentsData.count;
+}
+
+-(NSData *)thumbnailForIndex:(NSInteger)index
+{
+    NSData *photo = self.thumbnails[[NSString stringWithFormat:@"%lu",(unsigned long)index]];
     
     if (photo) {
         return photo;
     }
     
-    NSDictionary *photoData = self.photosData[index];
+    NSDictionary *photoData = self.contentsData[index];
     
-    [self.photosServices getContentsFromUrl:photoData[@"thumbnailUrl"] forIndex:index];
+    [self.photosServices getContentsFromUrl:photoData[@"thumbnailUrl"] for:ThumbnailDownload withIndex:index];
     
     return nil;
 }
 
+-(NSData *)imageForIndex:(NSInteger)index {
+    
+    NSData *image = self.downloadedPhotos[[NSString stringWithFormat:@"%lu",(unsigned long)index]];
+    
+    if (image) {
+        return image;
+    }
+    
+    NSDictionary *photoData = self.contentsData[index];
+    
+    [self.photosServices getContentsFromUrl:photoData[@"url"] for:FullImageDownload withIndex:index];
+    
+    return nil;
+}
 @end

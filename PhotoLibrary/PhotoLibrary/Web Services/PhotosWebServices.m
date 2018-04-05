@@ -8,11 +8,10 @@
 
 #import "PhotosWebServices.h"
 
-
-
 @interface PhotosWebServices()
 
 @property(nonatomic, weak) id <PhotosServicesDelegate> delegate;
+@property(nonatomic, strong) NSURLSession *session;
 @end
 
 @implementation PhotosWebServices
@@ -22,19 +21,31 @@
     
     self.delegate = delegatge;
     
+    NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    sessionConfig.timeoutIntervalForRequest = 30.0;
+    
+    self.session = [NSURLSession sessionWithConfiguration:sessionConfig];
+
     return self;
 }
 
 
--(void)getContentsFromUrl:(NSString *)urlString forIndex:(NSInteger)index {
+-(void)getContentsFromUrl:(NSString *)urlString for:(DownloadType)type withIndex:(NSInteger)index {
     NSURL *url = [NSURL URLWithString:urlString];
     
     __weak PhotosWebServices *weakSelf = self;
     
+    
+    
+    
+    
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
-        [weakSelf.delegate downloadCompletedWithData:data forIndex:index];
-       
+        if (error) {
+            [weakSelf.delegate downloadCompletedWithError:error];
+        } else {
+            [weakSelf.delegate downloadCompletedWithData:data for:type withIndex:index];
+        }
     }];
     
     [dataTask resume];

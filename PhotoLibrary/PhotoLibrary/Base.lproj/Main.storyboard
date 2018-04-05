@@ -27,6 +27,10 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="psf-M9-U0H">
+                                    <rect key="frame" x="0.0" y="-13" width="365" height="653"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="5ss-el-PpH">
                                         <rect key="frame" x="0.0" y="0.0" width="110" height="110"/>
@@ -38,6 +42,10 @@
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p5d-Y3-StY">
                                                     <rect key="frame" x="5" y="5" width="100" height="100"/>
                                                 </imageView>
+                                                <activityIndicatorView opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="9uw-2Y-NvY">
+                                                    <rect key="frame" x="45" y="45" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -66,11 +74,91 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="sgF-Ah-3uF" id="yMb-C2-PeR"/>
+                        <outlet property="mainActivityIndicator" destination="psf-M9-U0H" id="l3M-ji-6GX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="32.799999999999997" y="33.733133433283363"/>
+        </scene>
+        <!--Photo Download View Controller-->
+        <scene sceneID="Fw7-nD-oOy">
+            <objects>
+                <viewController storyboardIdentifier="PhotoDownloadViewController" id="Wbd-LD-5EH" customClass="PhotoDownloadViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="y4w-SF-Bp1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4E5-5E-IAC">
+                                <rect key="frame" x="0.0" y="67" width="375" height="600"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="roJ-Uu-NXe">
+                                        <rect key="frame" x="177" y="302" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="roJ-Uu-NXe" secondAttribute="trailing" constant="178" id="OAR-UW-cTw"/>
+                                    <constraint firstAttribute="bottom" secondItem="roJ-Uu-NXe" secondAttribute="bottom" constant="278" id="Thw-V2-DZH"/>
+                                    <constraint firstItem="roJ-Uu-NXe" firstAttribute="centerX" secondItem="4E5-5E-IAC" secondAttribute="centerX" id="n4a-XR-ciJ"/>
+                                    <constraint firstItem="roJ-Uu-NXe" firstAttribute="centerY" secondItem="4E5-5E-IAC" secondAttribute="centerY" constant="12" id="xWZ-KD-IU0"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="Wbd-LD-5EH" id="NTB-Dd-ZzX"/>
+                                </connections>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K8j-Il-zzx">
+                                <rect key="frame" x="314" y="21" width="45" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Rbo-rF-Lw7"/>
+                                    <constraint firstAttribute="width" constant="45" id="bEl-Tn-FeC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="39"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" red="0.25544081079999997" green="1" blue="0.68757868899999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <action selector="downloadButton:" destination="Wbd-LD-5EH" eventType="touchUpInside" id="Va4-ld-u38"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncz-Im-gTs">
+                                <rect key="frame" x="16" y="21" width="65" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="65" id="37u-0b-mlA"/>
+                                    <constraint firstAttribute="height" constant="48" id="LLg-RM-28P"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" red="0.25544081079999997" green="1" blue="0.68757868899999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButton:" destination="Wbd-LD-5EH" eventType="touchUpInside" id="vKB-Vr-HZA"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="4E5-5E-IAC" firstAttribute="top" secondItem="K8j-Il-zzx" secondAttribute="bottom" constant="6" id="3Ru-NM-fFw"/>
+                            <constraint firstItem="ncz-Im-gTs" firstAttribute="leading" secondItem="Qev-34-jiE" secondAttribute="leading" constant="16" id="8HU-6N-UjW"/>
+                            <constraint firstItem="Qev-34-jiE" firstAttribute="trailing" secondItem="K8j-Il-zzx" secondAttribute="trailing" constant="16" id="EPk-U3-Ept"/>
+                            <constraint firstItem="4E5-5E-IAC" firstAttribute="bottom" secondItem="Qev-34-jiE" secondAttribute="bottom" id="GHk-d9-J21"/>
+                            <constraint firstItem="ncz-Im-gTs" firstAttribute="top" secondItem="y4w-SF-Bp1" secondAttribute="top" constant="21" id="Id5-My-UKQ"/>
+                            <constraint firstItem="4E5-5E-IAC" firstAttribute="leading" secondItem="y4w-SF-Bp1" secondAttribute="leading" id="PIk-H8-gdu"/>
+                            <constraint firstItem="K8j-Il-zzx" firstAttribute="top" secondItem="y4w-SF-Bp1" secondAttribute="top" constant="21" id="TXC-wg-9Yf"/>
+                            <constraint firstItem="K8j-Il-zzx" firstAttribute="leading" secondItem="ncz-Im-gTs" secondAttribute="trailing" constant="233" id="Zuk-KO-E58"/>
+                            <constraint firstItem="4E5-5E-IAC" firstAttribute="top" secondItem="y4w-SF-Bp1" secondAttribute="top" constant="67" id="gkj-yg-0z6"/>
+                            <constraint firstAttribute="trailing" secondItem="4E5-5E-IAC" secondAttribute="trailing" id="rm7-Ng-uPL"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Qev-34-jiE"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="roJ-Uu-NXe" id="bLV-lb-KB9"/>
+                        <outlet property="downloadButton" destination="K8j-Il-zzx" id="Ymu-xb-eIn"/>
+                        <outlet property="scrollView" destination="4E5-5E-IAC" id="CL6-qD-n5v"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pb7-G3-3aM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="836" y="33.733133433283363"/>
         </scene>
     </scenes>
 </document>

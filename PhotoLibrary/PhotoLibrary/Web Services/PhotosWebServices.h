@@ -8,10 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum DownloadType {
+    InitialDownload = 0,
+    ThumbnailDownload,
+    FullImageDownload
+    
+} DownloadType;
+
 @protocol PhotosServicesDelegate
 
 @required
--(void)downloadCompletedWithData:(NSData *) responseData forIndex:(NSInteger)index;
+-(void)downloadCompletedWithData:(NSData *)responseData for:(DownloadType)type withIndex:(NSInteger)index;
 
 @optional
 -(void)downloadCompletedWithError:(NSError *) error;
@@ -21,5 +28,5 @@
 @interface PhotosWebServices : NSObject
 
 -(instancetype)initWithDelegate:(id)delegatge;
--(void)getContentsFromUrl:(NSString *)urlString forIndex:(NSInteger)index;
+-(void)getContentsFromUrl:(NSString *)urlString for:(DownloadType)type withIndex:(NSInteger)index;
 @end

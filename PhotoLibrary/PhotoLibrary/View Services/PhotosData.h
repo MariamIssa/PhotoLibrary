@@ -13,15 +13,17 @@
 
 @required
 -(void)dataLayerInitialSetupCompletedSuccessfully;
+-(void)thumbnailDownloadedSuccessfully:(NSData *)image forIndex:(NSInteger)index;
 
 @optional
--(void)dataLayerInitialSetupCompletedWithError:(NSError*)error;
-
-
+-(void)imageDownloadedSuccessfully:(NSData *)image forIndex:(NSInteger)index;
+-(void)dataLayerInitialSetupCompletedWithError:(NSError *)error;
+-(void)downloadCompletedWithError:(NSError *)error;
 @end
 
 @interface PhotosData : NSObject<PhotosServicesDelegate>
--(instancetype) initWithDelegate:(id)delegatge;
--(NSInteger) numberOfRows;
--(NSData *) imageForIndexPath:(NSUInteger)index;
+-(instancetype)initWithDelegate:(id)delegatge;
+-(NSInteger)numberOfRows;
+-(NSData *)thumbnailForIndex:(NSInteger)index;
+-(NSData *)imageForIndex:(NSInteger)index;
 @end
