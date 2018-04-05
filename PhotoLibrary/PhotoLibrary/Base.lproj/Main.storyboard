@@ -91,17 +91,6 @@
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4E5-5E-IAC">
                                 <rect key="frame" x="0.0" y="67" width="375" height="600"/>
-                                <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="roJ-Uu-NXe">
-                                        <rect key="frame" x="177" y="302" width="20" height="20"/>
-                                    </activityIndicatorView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="roJ-Uu-NXe" secondAttribute="trailing" constant="178" id="OAR-UW-cTw"/>
-                                    <constraint firstAttribute="bottom" secondItem="roJ-Uu-NXe" secondAttribute="bottom" constant="278" id="Thw-V2-DZH"/>
-                                    <constraint firstItem="roJ-Uu-NXe" firstAttribute="centerX" secondItem="4E5-5E-IAC" secondAttribute="centerX" id="n4a-XR-ciJ"/>
-                                    <constraint firstItem="roJ-Uu-NXe" firstAttribute="centerY" secondItem="4E5-5E-IAC" secondAttribute="centerY" constant="12" id="xWZ-KD-IU0"/>
-                                </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="Wbd-LD-5EH" id="NTB-Dd-ZzX"/>
                                 </connections>
@@ -151,7 +140,6 @@
                         <viewLayoutGuide key="safeArea" id="Qev-34-jiE"/>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="roJ-Uu-NXe" id="bLV-lb-KB9"/>
                         <outlet property="downloadButton" destination="K8j-Il-zzx" id="Ymu-xb-eIn"/>
                         <outlet property="scrollView" destination="4E5-5E-IAC" id="CL6-qD-n5v"/>
                     </connections>

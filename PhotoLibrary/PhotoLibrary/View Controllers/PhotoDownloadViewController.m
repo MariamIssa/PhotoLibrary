@@ -11,7 +11,6 @@
 @interface PhotoDownloadViewController ()
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *downloadButton;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic)  UIImageView *imageView;
 
@@ -22,13 +21,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    [self.activityIndicator setHidesWhenStopped:NO];
-    [self.activityIndicator startAnimating];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,10 +29,6 @@
 }
 
 -(void)setImage:(NSData *)imageData {
-    
-    [self.activityIndicator stopAnimating];
-    [self.activityIndicator setHidesWhenStopped:YES];
-    
     UIImage *image = [UIImage imageWithData:imageData];
     
     self.imageView = [[UIImageView alloc] initWithImage:image];

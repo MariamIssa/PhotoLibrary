@@ -109,29 +109,17 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    if (self.photoDownloadViewController) {
-        [self presentViewController:self.photoDownloadViewController animated:YES completion:^{
-            NSData *photoData = [self.dataLayer imageForIndex:indexPath.row];
-            
-            if (photoData) {
-                [self.photoDownloadViewController setImage:photoData];
-            } else {
-                [self.dataLayer imageForIndex:indexPath.row];
-            }
-        }];
-    } else {
-        self.photoDownloadViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PhotoDownloadViewController"];
+    self.photoDownloadViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PhotoDownloadViewController"];
+    
+    [self presentViewController:self.photoDownloadViewController animated:YES completion:^{
+        NSData *photoData = [self.dataLayer imageForIndex:indexPath.row];
         
-        [self presentViewController:self.photoDownloadViewController animated:YES completion:^{
-            NSData *photoData = [self.dataLayer imageForIndex:indexPath.row];
-            
-            if (photoData) {
-                [self.photoDownloadViewController setImage:photoData];
-            } else {
-                [self.dataLayer imageForIndex:indexPath.row];
-            }
-        }];
-    }
+        if (photoData) {
+            [self.photoDownloadViewController setImage:photoData];
+        } else {
+            [self.dataLayer imageForIndex:indexPath.row];
+        }
+    }];
 }
 
 @end
