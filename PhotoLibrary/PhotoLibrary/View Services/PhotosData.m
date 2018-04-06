@@ -40,7 +40,7 @@
 }
 
 -(void)getPhotosData {
-    [self.photosServices getContentsFromUrl:@"https://jsonplaceholder.typicode.com/photos" for:InitialDownload withIndex:-1];
+    [self.photosServices getContentsFromUrl:@"http://jsonplaceholder.typicode.com/photos" for:InitialDownload withIndex:-1];
 }
 
 -(void)downloadCompletedWithData:(NSData *)responseData for:(DownloadType)type withIndex:(NSInteger)index {

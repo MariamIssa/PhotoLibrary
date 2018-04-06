@@ -109,11 +109,10 @@
                                     <action selector="downloadButton:" destination="Wbd-LD-5EH" eventType="touchUpInside" id="Va4-ld-u38"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vin-vF-fbo">
-                                <rect key="frame" x="16" y="21" width="82" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vin-vF-fbo">
+                                <rect key="frame" x="16" y="21" width="65" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="FMW-G6-bt3"/>
-                                    <constraint firstAttribute="width" constant="82" id="YmF-eR-Xny"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Back">
@@ -128,6 +127,7 @@
                         <constraints>
                             <constraint firstItem="Qev-34-jiE" firstAttribute="trailing" secondItem="K8j-Il-zzx" secondAttribute="trailing" constant="16" id="EPk-U3-Ept"/>
                             <constraint firstItem="4E5-5E-IAC" firstAttribute="bottom" secondItem="Qev-34-jiE" secondAttribute="bottom" id="GHk-d9-J21"/>
+                            <constraint firstItem="Qev-34-jiE" firstAttribute="trailing" secondItem="Vin-vF-fbo" secondAttribute="trailing" constant="294" id="I9T-nX-hez"/>
                             <constraint firstItem="4E5-5E-IAC" firstAttribute="leading" secondItem="y4w-SF-Bp1" secondAttribute="leading" id="PIk-H8-gdu"/>
                             <constraint firstItem="K8j-Il-zzx" firstAttribute="top" secondItem="y4w-SF-Bp1" secondAttribute="top" constant="21" id="TXC-wg-9Yf"/>
                             <constraint firstItem="Vin-vF-fbo" firstAttribute="leading" secondItem="Qev-34-jiE" secondAttribute="leading" constant="16" id="Z9h-32-XcX"/>

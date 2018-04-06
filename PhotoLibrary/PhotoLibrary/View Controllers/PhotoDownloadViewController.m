@@ -14,7 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *downloadButton;
 
 @property (strong, nonatomic)  UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -30,17 +29,11 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    [self.activityIndicator startAnimating];
-    [self.activityIndicator setHidesWhenStopped:YES];
-    [self.view bringSubviewToFront:self.activityIndicator];
-}
-
 -(void)viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)viewImageWithIndex:(NSInteger)index {
+-(void)viewImageForIndex:(NSInteger)index {
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageDownloadCompletedSuccessfully:) name:kImageDownloadCompleted object:nil];
     
@@ -61,9 +54,7 @@
      });
 }
 
--(void)setImage:(NSData *)imageData {
-    [self.activityIndicator stopAnimating];
-    
+-(void)setImage:(NSData *)imageData {    
     UIImage *image = [UIImage imageWithData:imageData];
     
     self.imageView = [[UIImageView alloc] initWithImage:image];

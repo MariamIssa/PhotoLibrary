@@ -38,7 +38,8 @@
 -(void) initialSetup
 {
     [self.mainActivityIndicator startAnimating];
-    
+    [self.mainActivityIndicator setHidesWhenStopped:YES];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataLayerInitialSetupCompletedSuccessfully) name:kDataLayerInitialSetupCompleted object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(thumbnailDownloadedSuccessfully:forIndex:) name:kThumbnailDownloadCompleted object:nil];
@@ -53,7 +54,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.collectionView reloadData];
         [self.mainActivityIndicator stopAnimating];
-        [self.mainActivityIndicator setHidesWhenStopped:YES];
     });
 }
 
@@ -66,6 +66,7 @@
 
 -(void)downloadCompletedWithError:(NSError *)error {
      dispatch_async(dispatch_get_main_queue(), ^{
+         [self.mainActivityIndicator stopAnimating];
         UIAlertController *errorAlert = [UIAlertController alertControllerWithTitle:@"Download Failed" message:@"Please try again" preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
@@ -114,7 +115,7 @@
     PhotoDownloadViewController *photoDownloadViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PhotoDownloadViewController"];
     
     [self presentViewController:photoDownloadViewController animated:YES completion:^{
-        [photoDownloadViewController viewImageWithIndex:indexPath.row];
+        [photoDownloadViewController viewImageForIndex:indexPath.row];
     }];
 }
 

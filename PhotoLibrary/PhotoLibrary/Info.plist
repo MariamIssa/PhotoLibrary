@@ -9,7 +9,14 @@
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>jsonplaceholder.typicode.com</key>
-			<dict/>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.1</string>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
 			<key>NSIncludesSubdomains</key>
 			<true/>
 			<key>NSExceptionMinimumTLSVersion</key>
