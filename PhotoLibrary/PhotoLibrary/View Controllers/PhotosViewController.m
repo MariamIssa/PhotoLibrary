@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *mainActivityIndicator;
 
+@property (nonatomic) BOOL didErrorOccured;
 @property (strong, nonatomic)PhotosData *dataLayer;
 @end
 
@@ -39,12 +40,13 @@
 {
     [self.mainActivityIndicator startAnimating];
     [self.mainActivityIndicator setHidesWhenStopped:YES];
-
+    self.didErrorOccured = NO;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataLayerInitialSetupCompletedSuccessfully) name:kDataLayerInitialSetupCompleted object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(thumbnailDownloadedSuccessfully:forIndex:) name:kThumbnailDownloadCompleted object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(thumbnailDownloadedSuccessfullyForIndex:) name:kThumbnailDownloadCompleted object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadCompletedWithError:) name:kDownloadCompletedWithError object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadCompletedWithError) name:kDownloadCompletedWithError object:nil];
     
     self.dataLayer = [PhotosData shared];
 }
@@ -57,15 +59,23 @@
     });
 }
 
--(void)thumbnailDownloadedSuccessfully:(NSData *)image forIndex:(NSInteger)index
+-(void)thumbnailDownloadedSuccessfullyForIndex:(NSNotification *)notification
 {
      dispatch_async(dispatch_get_main_queue(), ^{
-         [self.collectionView reloadData];
-     });
+         NSDictionary *userInfo = notification.object;
+
+         NSInteger index = [(NSNumber *)userInfo[@"Index"] integerValue];
+         
+         [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]]];
+    });
 }
 
--(void)downloadCompletedWithError:(NSError *)error {
+-(void)downloadCompletedWithError {
+    if (self.didErrorOccured) {
+        return;
+    }
      dispatch_async(dispatch_get_main_queue(), ^{
+         
          [self.mainActivityIndicator stopAnimating];
         UIAlertController *errorAlert = [UIAlertController alertControllerWithTitle:@"Download Failed" message:@"Please try again" preferredStyle:UIAlertControllerStyleAlert];
         
@@ -75,6 +85,8 @@
         
         [self presentViewController:errorAlert animated:YES completion:nil];
      });
+    
+    self.didErrorOccured = YES;
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView

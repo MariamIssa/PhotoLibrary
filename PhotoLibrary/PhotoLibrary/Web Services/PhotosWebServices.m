@@ -33,14 +33,12 @@
 -(void)getContentsFromUrl:(NSString *)urlString for:(DownloadType)type withIndex:(NSInteger)index {
     NSURL *url = [NSURL URLWithString:urlString];
     
-    __weak PhotosWebServices *weakSelf = self;
-    
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         if (error) {
-            [weakSelf.delegate downloadCompletedWithError:error];
+            [self.delegate downloadCompletedWithError:error];
         } else {
-            [weakSelf.delegate downloadCompletedWithData:data for:type withIndex:index];
+            [self.delegate downloadCompletedWithData:data for:type withIndex:index];
         }
     }];
     

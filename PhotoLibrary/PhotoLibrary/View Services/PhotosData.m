@@ -58,14 +58,14 @@
     } else if(type == ThumbnailDownload) {
         [self.thumbnails setObject:responseData forKey:[NSString stringWithFormat:@"%ld",(long)index]];
         
-        NSDictionary* userInfo = [NSDictionary dictionaryWithObject:responseData forKey:@"ImageData"];
-        
+        NSDictionary* userInfo = [NSDictionary dictionaryWithObjects:@[responseData, [NSNumber numberWithInteger:index]] forKeys:@[@"ImageData", @"Index"]];
+                
        [[NSNotificationCenter defaultCenter] postNotificationName:kThumbnailDownloadCompleted object:userInfo];
         
     } else if(type == FullImageDownload){
          [self.downloadedPhotos setObject:responseData forKey:[NSString stringWithFormat:@"%ld",(long)index]];
         
-        NSDictionary* userInfo = [NSDictionary dictionaryWithObject:responseData forKey:@"ImageData"];
+        NSDictionary* userInfo = [NSDictionary dictionaryWithObjects:@[responseData, [NSNumber numberWithInteger:index]] forKeys:@[@"ImageData", @"Index"]];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kImageDownloadCompleted object:userInfo];
     }
@@ -83,7 +83,7 @@
 
 -(NSData *)thumbnailForIndex:(NSInteger)index
 {
-    NSData *photo = self.thumbnails[[NSString stringWithFormat:@"%lu",(unsigned long)index]];
+    NSData *photo = self.thumbnails[[NSString stringWithFormat:@"%lu",(long)index]];
     
     if (photo) {
         return photo;
@@ -98,7 +98,7 @@
 
 -(NSData *)imageForIndex:(NSInteger)index {
     
-    NSData *image = self.downloadedPhotos[[NSString stringWithFormat:@"%lu",(unsigned long)index]];
+    NSData *image = self.downloadedPhotos[[NSString stringWithFormat:@"%lu",(long)index]];
     
     if (image) {
         return image;
