@@ -35,10 +35,6 @@
     
     __weak PhotosWebServices *weakSelf = self;
     
-    
-    
-    
-    
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         if (error) {

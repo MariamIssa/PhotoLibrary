@@ -9,7 +9,6 @@
 #import "PhotosData.h"
 
 @interface PhotosData()
-@property(nonatomic, weak) id <PhotosDataDelegate> delegate;
 @property(nonatomic, strong) NSArray *contentsData;
 @property(nonatomic, strong) PhotosWebServices *photosServices;
 @property(nonatomic, strong) NSMutableDictionary *thumbnails;
@@ -19,15 +18,23 @@
 
 @implementation PhotosData
 
--(instancetype) initWithDelegate:(id)delegatge{
++ (id) shared {
+    static dispatch_once_t pred = 0;
+    static id _sharedObject = nil;
+    dispatch_once(&pred, ^{
+        _sharedObject = [[self alloc] init];
+    });
+    return _sharedObject;
+}
+
+-(instancetype) init{
     
-    self = [super init];
-    
-    self.delegate = delegatge;
-    self.contentsData = [[NSArray alloc] init];
-    self.photosServices = [[PhotosWebServices alloc] initWithDelegate:self];
-    self.thumbnails = [[NSMutableDictionary alloc] init];
-    [self getPhotosData];
+    if(self = [super init]){
+        self.contentsData = [[NSArray alloc] init];
+        self.photosServices = [[PhotosWebServices alloc] initWithDelegate:self];
+        self.thumbnails = [[NSMutableDictionary alloc] init];
+        [self getPhotosData];
+    }
     
     return self;
 }
@@ -44,26 +51,29 @@
                            options:NSJSONReadingMutableLeaves
                            error:nil];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.delegate dataLayerInitialSetupCompletedSuccessfully];
-        });
+        NSDictionary* userInfo = [NSDictionary dictionaryWithObject:self.contentsData forKey:@"ContentsData"];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDataLayerInitialSetupCompleted object:userInfo];
+        
     } else if(type == ThumbnailDownload) {
         [self.thumbnails setObject:responseData forKey:[NSString stringWithFormat:@"%ld",(long)index]];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.delegate thumbnailDownloadedSuccessfully:responseData forIndex:index];
-        });
+        NSDictionary* userInfo = [NSDictionary dictionaryWithObject:responseData forKey:@"ImageData"];
+        
+       [[NSNotificationCenter defaultCenter] postNotificationName:kThumbnailDownloadCompleted object:userInfo];
         
     } else if(type == FullImageDownload){
          [self.downloadedPhotos setObject:responseData forKey:[NSString stringWithFormat:@"%ld",(long)index]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.delegate imageDownloadedSuccessfully:responseData forIndex:index];
-        });
+        
+        NSDictionary* userInfo = [NSDictionary dictionaryWithObject:responseData forKey:@"ImageData"];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kImageDownloadCompleted object:userInfo];
     }
 }
 
 - (void)downloadCompletedWithError:(NSError *)error {
-    [self.delegate downloadCompletedWithError:error];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDownloadCompletedWithError object:nil];
+    
 }
 
 -(NSInteger)numberOfRows

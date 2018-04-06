@@ -13,8 +13,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *mainActivityIndicator;
 
-@property (strong, nonatomic) PhotosData *dataLayer;
-@property (strong, nonatomic)PhotoDownloadViewController *photoDownloadViewController;
+@property (strong, nonatomic)PhotosData *dataLayer;
 @end
 
 @implementation PhotosViewController
@@ -32,46 +31,49 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void) initialSetup
 {
     [self.mainActivityIndicator startAnimating];
-    self.dataLayer = [[PhotosData alloc] initWithDelegate:self];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataLayerInitialSetupCompletedSuccessfully) name:kDataLayerInitialSetupCompleted object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(thumbnailDownloadedSuccessfully:forIndex:) name:kThumbnailDownloadCompleted object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadCompletedWithError:) name:kDownloadCompletedWithError object:nil];
+    
+    self.dataLayer = [PhotosData shared];
 }
 
 -(void)dataLayerInitialSetupCompletedSuccessfully
 {
-    [self.collectionView reloadData];
-    [self.mainActivityIndicator stopAnimating];
-    [self.mainActivityIndicator setHidesWhenStopped:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadData];
+        [self.mainActivityIndicator stopAnimating];
+        [self.mainActivityIndicator setHidesWhenStopped:YES];
+    });
 }
 
 -(void)thumbnailDownloadedSuccessfully:(NSData *)image forIndex:(NSInteger)index
 {
-   UICollectionViewCell *cell = [self.collectionView.dataSource collectionView:self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-    
-    if (cell && image) {
-        UIActivityIndicatorView *activityIndicator = [cell viewWithTag:2];
-        [activityIndicator stopAnimating];
-        [activityIndicator setHidden:YES];
-
-        UIImageView *imageView = [cell viewWithTag:1];
-        [imageView setImage:[UIImage imageWithData:image]];
-    }
-}
-
--(void)imageDownloadedSuccessfully:(NSData *)image forIndex:(NSInteger)index
-{
-    [self.photoDownloadViewController setImage:image];
+     dispatch_async(dispatch_get_main_queue(), ^{
+         [self.collectionView reloadData];
+     });
 }
 
 -(void)downloadCompletedWithError:(NSError *)error {
-    UIAlertController *errorAlert = [UIAlertController alertControllerWithTitle:@"Download Failed" message:@"Please try again" preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
-    
-    [errorAlert addAction:okAction];
-    
-    [self presentViewController:errorAlert animated:YES completion:nil];
+     dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertController *errorAlert = [UIAlertController alertControllerWithTitle:@"Download Failed" message:@"Please try again" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
+        
+        [errorAlert addAction:okAction];
+        
+        [self presentViewController:errorAlert animated:YES completion:nil];
+     });
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -109,16 +111,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    self.photoDownloadViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PhotoDownloadViewController"];
+    PhotoDownloadViewController *photoDownloadViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PhotoDownloadViewController"];
     
-    [self presentViewController:self.photoDownloadViewController animated:YES completion:^{
-        NSData *photoData = [self.dataLayer imageForIndex:indexPath.row];
-        
-        if (photoData) {
-            [self.photoDownloadViewController setImage:photoData];
-        } else {
-            [self.dataLayer imageForIndex:indexPath.row];
-        }
+    [self presentViewController:photoDownloadViewController animated:YES completion:^{
+        [photoDownloadViewController viewImageWithIndex:indexPath.row];
     }];
 }
 

@@ -9,20 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "PhotosWebServices.h"
 
-@protocol PhotosDataDelegate
-
-@required
--(void)dataLayerInitialSetupCompletedSuccessfully;
--(void)thumbnailDownloadedSuccessfully:(NSData *)image forIndex:(NSInteger)index;
-
-@optional
--(void)imageDownloadedSuccessfully:(NSData *)image forIndex:(NSInteger)index;
--(void)dataLayerInitialSetupCompletedWithError:(NSError *)error;
--(void)downloadCompletedWithError:(NSError *)error;
-@end
+static NSString * const kDataLayerInitialSetupCompleted = @"DataLayerInitialSetupCompleted";
+static NSString * const kThumbnailDownloadCompleted = @"ThumbnailDownloadCompleted";
+static NSString * const kImageDownloadCompleted = @"ImageDownloadCompleted";
+static NSString * const kDownloadCompletedWithError = @"DownloadCompletedWithError";
 
 @interface PhotosData : NSObject<PhotosServicesDelegate>
--(instancetype)initWithDelegate:(id)delegatge;
+
++ (id) shared;
+-(instancetype)init;
 -(NSInteger)numberOfRows;
 -(NSData *)thumbnailForIndex:(NSInteger)index;
 -(NSData *)imageForIndex:(NSInteger)index;

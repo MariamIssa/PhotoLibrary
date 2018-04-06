@@ -10,6 +10,6 @@
 #import "PhotosWebServices.h"
 #import "PhotosData.h"
 
-@interface PhotosViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource, PhotosDataDelegate>
+@interface PhotosViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource>
 
 @end

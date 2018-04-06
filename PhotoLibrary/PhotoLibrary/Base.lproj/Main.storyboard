@@ -109,31 +109,29 @@
                                     <action selector="downloadButton:" destination="Wbd-LD-5EH" eventType="touchUpInside" id="Va4-ld-u38"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncz-Im-gTs">
-                                <rect key="frame" x="16" y="21" width="65" height="48"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vin-vF-fbo">
+                                <rect key="frame" x="16" y="21" width="82" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="65" id="37u-0b-mlA"/>
-                                    <constraint firstAttribute="height" constant="48" id="LLg-RM-28P"/>
+                                    <constraint firstAttribute="height" constant="40" id="FMW-G6-bt3"/>
+                                    <constraint firstAttribute="width" constant="82" id="YmF-eR-Xny"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Back">
                                     <color key="titleColor" red="0.25544081079999997" green="1" blue="0.68757868899999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
-                                    <action selector="backButton:" destination="Wbd-LD-5EH" eventType="touchUpInside" id="vKB-Vr-HZA"/>
+                                    <action selector="backButton:" destination="Wbd-LD-5EH" eventType="touchUpInside" id="v1F-Tb-fZg"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="4E5-5E-IAC" firstAttribute="top" secondItem="K8j-Il-zzx" secondAttribute="bottom" constant="6" id="3Ru-NM-fFw"/>
-                            <constraint firstItem="ncz-Im-gTs" firstAttribute="leading" secondItem="Qev-34-jiE" secondAttribute="leading" constant="16" id="8HU-6N-UjW"/>
                             <constraint firstItem="Qev-34-jiE" firstAttribute="trailing" secondItem="K8j-Il-zzx" secondAttribute="trailing" constant="16" id="EPk-U3-Ept"/>
                             <constraint firstItem="4E5-5E-IAC" firstAttribute="bottom" secondItem="Qev-34-jiE" secondAttribute="bottom" id="GHk-d9-J21"/>
-                            <constraint firstItem="ncz-Im-gTs" firstAttribute="top" secondItem="y4w-SF-Bp1" secondAttribute="top" constant="21" id="Id5-My-UKQ"/>
                             <constraint firstItem="4E5-5E-IAC" firstAttribute="leading" secondItem="y4w-SF-Bp1" secondAttribute="leading" id="PIk-H8-gdu"/>
                             <constraint firstItem="K8j-Il-zzx" firstAttribute="top" secondItem="y4w-SF-Bp1" secondAttribute="top" constant="21" id="TXC-wg-9Yf"/>
-                            <constraint firstItem="K8j-Il-zzx" firstAttribute="leading" secondItem="ncz-Im-gTs" secondAttribute="trailing" constant="233" id="Zuk-KO-E58"/>
+                            <constraint firstItem="Vin-vF-fbo" firstAttribute="leading" secondItem="Qev-34-jiE" secondAttribute="leading" constant="16" id="Z9h-32-XcX"/>
+                            <constraint firstItem="Vin-vF-fbo" firstAttribute="top" secondItem="y4w-SF-Bp1" secondAttribute="top" constant="21" id="g8k-Jp-vtX"/>
                             <constraint firstItem="4E5-5E-IAC" firstAttribute="top" secondItem="y4w-SF-Bp1" secondAttribute="top" constant="67" id="gkj-yg-0z6"/>
                             <constraint firstAttribute="trailing" secondItem="4E5-5E-IAC" secondAttribute="trailing" id="rm7-Ng-uPL"/>
                         </constraints>

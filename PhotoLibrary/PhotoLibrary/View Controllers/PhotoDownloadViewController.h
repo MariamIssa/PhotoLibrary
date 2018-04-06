@@ -10,6 +10,5 @@
 
 @interface PhotoDownloadViewController : UIViewController<UIScrollViewDelegate>
 
--(void)setImage:(NSData *)image;
-
+-(void)viewImageWithIndex:(NSInteger)index;
 @end
